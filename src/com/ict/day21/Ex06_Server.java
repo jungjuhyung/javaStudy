@@ -1,0 +1,67 @@
+package com.ict.day21;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Ex06_Server implements Runnable {
+	ServerSocket server = null;
+	Socket socket = null;
+	
+	InputStreamReader isr = null;
+	BufferedReader br = null;
+	
+	OutputStreamWriter osw = null;
+	BufferedWriter bw = null;
+	
+	
+	public Ex06_Server() {
+		try {
+			server = new ServerSocket(7001);
+			System.out.println("서버 대기중");
+			
+			new Thread(this).start();
+		} catch (Exception e) {
+		}
+	}
+	
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				socket = server.accept();
+				
+				// 클라이언트가 보낸 정보를 받기 위해 입력스트림을 얻기
+				isr = new InputStreamReader(socket.getInputStream());
+				br = new BufferedReader(isr);
+				String msg = br.readLine();
+				
+				String ip = socket.getInetAddress().getHostAddress();
+				System.out.println(ip + ":"+"님 접속");
+				
+				osw = new OutputStreamWriter(socket.getOutputStream());
+				bw = new BufferedWriter(osw);
+				msg+=System.lineSeparator();
+				bw.write(msg);
+				bw.flush();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			try {
+				socket.close();
+			} catch (Exception e2) {
+			}
+		}
+	}
+	public static void main(String[] args) {
+		new Ex06_Server(); // 1. 자기 자신 생성자 호출
+	}
+
+}

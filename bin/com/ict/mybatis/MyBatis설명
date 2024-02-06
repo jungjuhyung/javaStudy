@@ -1,0 +1,51 @@
+1. MyBatis 다운 받아서 util 폴더에 넣고 압축 해제
+2. mybatis-3.X.XX.jar 파일, mybatis-3.X.XX.pdf 파일 필요
+2-1. 프로젝트에서 ojdbc11 추가한것처럼 mybatis 라이브러리 추가해주기
+2-2. window -> maven -> download artifact javadoc 클릭
+3. MyBatis는 자바진영에서 사용하는 SQL 프레임워크(구조화된 틀)이다.
+3-2. MYBatis는 JDBC를 편하게 해주는 프레임워크이기 때문에 오라클과 java를 연결해주는 JDBC드라이버가 반드시 설치되어있어야한다.
+
+-----------------------------
+4. VO클래스 생성
+	 원하는 테이블과 컬럼명이 일치, // 이름이 다르면 null로 채워지거나 값이 들어오지 않는다.
+	 일부를 빼도 상관없고 다른 테이블의 컬럼명을 넣어도 상관없다.
+
+5. config, mapper xml파일 생성
+	 
+5-1. config.xml(이름은 마음대로 가능)을 만들자 //(패키지 마우스 우클릭 new -> other -> XML파일 로 만든다.)
+	 (참고, xml(eXtensible Markup Language)이란 확장 마크업 언어, 사용자가 태그를 만들어서 사용할 수 있다.)
+	 다운 받은 pdf를 보면 만드는 법이 나온다.(pdf 3페이지 맨 위 코드 복사함)
+	 xml 파일의 첫 줄은 무조건 <?xml version="1.0" encoding="UTF-8"?> 이다.
+	 encoding이란 문자를 바이트코드로 변환하는 것
+	 utf-8이란 : 전세계 언어를 표현가능, 유니코드
+	 => 오라클에 접속 정보 입력
+	 => mapper.xml 위치 지정
+	 
+5-2. mapper.xml을 만들기 //(패키지 마우스 우클릭 new -> other -> XML파일 로 만든다.)
+	 다운 받은 pdf에 mapper 만드는 방법 기재(pdf 4페이지 마지막 코드 복사)
+	 mapper namespace="mapper이름" 는 mapper가 여러개 일 때 구분하기 위함
+	 java에서 mapper에 접근할 때 mapper이름.id로 접근한다.
+	 mapper는 쿼리를 사용하여 DB에 보내고 결과를 받아서 mapper를 호출하는 곳으로
+	 결과를 되돌려 보내는 역할을 한다.(이때 결과를 받는 곳이 VO클래스이다.)
+	 태그 자체가 select, insert, update, delete 태그 있다.
+	 태그에서 자주색으로 표현된 것들을 속성이라고 한다.
+	 
+6. DBService.java 만들기(class 생성)
+	=> config 파일을 읽어서 java에서 MyBatis를 사용할 수 있도록 도와주는 클래스
+		다운 받은 pdf를 보면 만드는 법이 나온다.(pdf 2페이지에 마지막에 나옴)
+		java에서는 SQLSession클래스를 사용한다.
+		SQLSession클래스를 사용하기 위해서 SQLSessionFactory가 필요하다.
+		SQLSessionFactory를 return해주는 클래스
+
+7. DAO.java(class 생성)
+	DB처리하는 클래스 : DBService.getFactory()로 SqlSessionFactory를 호출하고
+				SqlSessionFactory를 이용해서 자바에서 사용할 수 있는 SqlSession을 만들어서 사용
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 

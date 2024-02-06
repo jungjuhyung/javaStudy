@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+	<!--  
+	주의, select문의 resultType에서 여러줄이 나와도 List<VO>가 아닌 그냥 VO타입이다.
+	resultType은 패키지 주소부터 작성해줘야한다.
+	selec문의 기본 mapper 구조
+	<select id="외부에서 호출할 때 사용할 id" resultType="결과 타입(VO 또는 int)" [parameterType="외부에서 들어오는 정보 타입"]>
+		실제 사용할 쿼리
+	</select>
+	
+	아래 3개는 전부 int로 결과가 나오기 때문에 resultType을 넣을 수 없다.
+	<insert id="" ></insert>
+	<delete id=""></delete>
+	<update id=""></update>
+	-->
+	<select id="getSelectAll" resultType="com.ict.mybatis.Ex01_VO">
+		select * from customer
+	</select>
+	
+	<!-- 기본적으로 parameterType은 String으로 받는다.(특별히 int를 받는경우도 가끔 있다.)
+	지금 형식은 ?가 하나일 때이다. 동적변수가 2개이상이면 parameterType을 VO로 받게 된다.
+	하나일 때는 #{명칭은 자유} -->
+	<select id="getSelectOne" resultType="com.ict.mybatis.Ex01_VO" parameterType="String">
+	select * from customer where custid = #{custid}
+	</select>
+	
+	<select id="getCount" resultType="int">
+	select count(*) from customer
+	</select>
+	
+	<!-- 파라미터가 1개 이상이면 반드시 파라미터를 VO에 담아서 넘겨줘야한다.
+	무조건 컬럼명과 VO의 변수의 이름이 같아야한다.
+	하나 이상일 때는 #{컬럼명}으로 작성해야한다. -->
+	<insert id="getInsert" parameterType="com.ict.mybatis.Ex01_VO">
+	insert into customer(custid, name, address, phone) 
+	values(#{custid}, #{name}, #{address}, #{phone})
+	</insert>
+	
+	<delete id="getDelete" parameterType="com.ict.mybatis.Ex01_VO">
+	delete from customer where custid = #{custid}
+	</delete>
+	
+	<update id="getUpdate" parameterType="com.ict.mybatis.Ex01_VO">
+	update customer set 
+	name=#{name}, 
+	address=#{address}, 
+	phone=#{phone} 
+	where custid=#{custid}
+	</update>
+	
+	
+	
+	
+</mapper>
